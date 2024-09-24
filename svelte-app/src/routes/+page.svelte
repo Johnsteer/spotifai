@@ -6,10 +6,9 @@
     const tracksStore = writable([]);
 
 
-    function handleClick() {
+    async function handleClick() {
         if ($tracksStore.length === 0) {
-            tracksStore.set(getUserSavedTracks($accessToken));
-
+            tracksStore.set(await getUserSavedTracks($accessToken));
         };
     };
     
@@ -29,7 +28,12 @@
     {:else}
         access token store not working    
     {/if}
-    <p>{$tracksStore.toString()}</p>
+    {#if $tracksStore.length !== 0}
+        <p>{$tracksStore.toString()}</p>
+    {:else}
+        No Track Data            
+    {/if}
+
 {:else}
     <p>Please log in to view your profile.</p>
 {/if}
