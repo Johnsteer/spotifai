@@ -1,11 +1,16 @@
 <script>
     import { profile, accessToken } from '$lib/stores';
     import { getUserSavedTracks } from '$lib/spotify-api';
+    import { writable } from 'svelte/store';
     
-    let tracks = [];
+    const tracksStore = writable([]);
+
 
     function handleClick() {
-        tracks = getUserSavedTracks($accessToken);
+        if ($tracksStore.length === 0) {
+            tracksStore.set(getUserSavedTracks($accessToken));
+
+        };
     };
     
 </script>
@@ -19,7 +24,12 @@
         <img src={$profile.images[0].url} alt="Profile media" />
     {/if}
 
-    {#if $accessToken} <button on:click={handleClick}>Fetch Tracks</button> {/if}
+    {#if $accessToken} 
+        <button on:click={handleClick}>Fetch Tracks</button>
+    {:else}
+        access token store not working    
+    {/if}
+    <p>{$tracksStore.toString()}</p>
 {:else}
     <p>Please log in to view your profile.</p>
 {/if}

@@ -27,7 +27,7 @@ export async function load({ url, cookies }) {
         cookies.set('spotifyRefreshToken', tokenResponse.refresh_token, { path: '/', httpOnly: true, secure: true, sameSite: 'strict' });
         cookies.delete('codeVerifier', { path: '/' });
 
-        return { profile: userProfile };
+        return { profile: userProfile, accessToken: tokenResponse.access_token };
     } catch (error) {
         console.error('Error during Spotify authentication:', error);
         throw redirect(302, '/login');

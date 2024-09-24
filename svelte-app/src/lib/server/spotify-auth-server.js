@@ -24,7 +24,7 @@ export function getAuthUrl() {
     authUrl.searchParams.append('client_id', SPOTIFY_CLIENT_ID);
     authUrl.searchParams.append('response_type', 'code');
     authUrl.searchParams.append('redirect_uri', SPOTIFY_REDIRECT_URI);
-    authUrl.searchParams.append('scope', 'user-read-private user-read-email');
+    authUrl.searchParams.append('scope', 'user-read-private user-read-email user-library-read');
     authUrl.searchParams.append('code_challenge_method', 'S256');
     authUrl.searchParams.append('code_challenge', codeChallenge);
 

@@ -1,16 +1,17 @@
 <script>
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
-    import { profile } from '$lib/stores';
+    import { profile, accessToken } from '$lib/stores';
 
     export let data;
 
     onMount(() => {
         if (data.profile) {
             profile.set(data.profile);
+            accessToken.set(data.accessToken);
             goto('/');
         } else {
-            goto('/login');
+            goto('/');
         }
     });
 </script>

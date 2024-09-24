@@ -13,10 +13,10 @@
 <div style="display:flex; flex-direction:column; padding: 0 10%; align-items:center;">
     <nav>
         <a href="/">Home</a>
-        {#if $profile}
-            <span>Welcome, {$profile.display_name}</span>
-        {/if}
+        <a href="/login">Login with Spotify</a>
     </nav>
-
+    {#if $profile}
+        <span>Welcome, {$profile.display_name}</span>
+    {/if}
     <slot />
 </div>
