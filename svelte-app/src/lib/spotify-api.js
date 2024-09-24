@@ -9,7 +9,5 @@ export async function getUserSavedTracks(accessToken) {
         }
     });
     const data = await response.json();
-    savedTracks = data.items;
-    console.log("savedTracks", savedTracks)
-    return savedTracks;
+    return data;
 }
