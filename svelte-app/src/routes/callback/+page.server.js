@@ -1,5 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import { getAccessToken, getUserProfile } from '$lib/server/spotify-auth-server';
+import { getUserSavedTracks } from '$lib/spotify-api';
 
 export async function load({ url, cookies }) {
     const code = url.searchParams.get('code');
@@ -22,14 +23,35 @@ export async function load({ url, cookies }) {
         }
 
         const userProfile = await getUserProfile(tokenResponse.access_token);
+        const tracksResponse = await getUserSavedTracks(tokenResponse.access_token);
+        console.log(typeof(tracksResponse.items), tracksResponse);
+        const tracksData = tracksResponse.items.map(item => {
+            const track = item.track;
+            const artist = track.artists[0];
+
+            return {
+                trackId: track.id,
+                trackName: track.name,
+                trackHref: track.external_urls.spotify,
+                artistHref: artist.external_urls.spotify,
+                artistName: artist.name
+            };
+        });
+
+        
 
         cookies.set('spotifyAccessToken', tokenResponse.access_token, { path: '/', httpOnly: true, secure: true, sameSite: 'strict' });
         cookies.set('spotifyRefreshToken', tokenResponse.refresh_token, { path: '/', httpOnly: true, secure: true, sameSite: 'strict' });
         cookies.delete('codeVerifier', { path: '/' });
 
-        return { profile: userProfile, accessToken: tokenResponse.access_token };
+        return { 
+            profile: userProfile, 
+            accessToken: tokenResponse.access_token,
+            userSavedTracks: tracksData
+        };
     } catch (error) {
         console.error('Error during Spotify authentication:', error);
-        throw redirect(302, '/login');
+        throw redirect(302, '/');
     }
 }
+

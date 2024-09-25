@@ -13,7 +13,9 @@
 <div style="display:flex; flex-direction:column; padding: 0 10%; align-items:center;">
     <nav>
         <a href="/">Home</a>
+        {#if !$profile}
         <a href="/login">Login with Spotify</a>
+        {/if}
     </nav>
     {#if $profile}
         <span>Welcome, {$profile.display_name}</span>

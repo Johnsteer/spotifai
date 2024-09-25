@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { readable, writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
 
@@ -71,3 +71,5 @@ export function initializeAccessToken() {
         }
     }
 }
+
+export const userSavedTracks = writable([]);
