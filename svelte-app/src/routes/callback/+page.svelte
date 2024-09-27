@@ -5,15 +5,16 @@
 
     export let data;
 
+    
     onMount(() => {
-        if (data.profile) {
-            profile.set(data.profile);
-            console.log("rofile store updated: ", data.profile);
+        if (data.accessToken) {
+            // profile.set(data.profile);
+            // console.log("rofile store updated: ", data.profile);
             accessToken.set(data.accessToken);
             console.log("accessToken store updated: ", data.accessToken);
-            userSavedTracks.set(data.userSavedTracks);
-            console.log("userSavedTracks store updated: ", data.userSavedTracks);
-            goto('/');
+            // userSavedTracks.set(data.userSavedTracks);
+            // console.log("userSavedTracks store updated: ", data.userSavedTracks);
+            goto('/home');
         } else {
             goto('/');
         }
